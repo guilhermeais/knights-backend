@@ -1,0 +1,13 @@
+# Requisitos Funcionais
+- <input type="checkbox" disabled /> Deve ser possivel atualizar o apelido de um **Knight**
+- <input type="checkbox" disabled /> Deve ser possivel atualizar a arma equipada de um **Knight**
+- <input type="checkbox" disabled /> Deve ser possivel apagar um **Knight**
+- <input type="checkbox" disabled /> **Knight** apagados entram no **salão de heróis**.
+- <input type="checkbox" disabled /> Deve ser possivel obter todos os **Knights**
+- <input type="checkbox" disabled /> Um **Knight** deve se tornar um **heroi** após ter um ataque superior a **30**
+- <input type="checkbox" disabled /> Deve ser possivel obter todos **Knights** que se tornaram **herois**
+- <input type="checkbox" disabled /> Deve calcular o poder de ataque de um **Knight** a partir da sua arma e de seus atributos 
+    - <input type="checkbox" disabled /> `Ataque = 10 + mod(keyAttribute) + equippedWeapon.mod`
+- <input type="checkbox" disabled /> Deve calcular a experiência de um **Knight** de acordo com as regras abaixo: 
+    - <input type="checkbox" disabled /> Idade superior a 7 anos;
+    - <input type="checkbox" disabled /> Formula: `exp = Math.floor((age - 7) * Math.pow(22, 1.45))`

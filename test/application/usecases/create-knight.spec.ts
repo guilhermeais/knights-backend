@@ -1,0 +1,54 @@
+import { Logger } from '@/application/protocols/gateways/logger.interface';
+import {
+  CreateKnight,
+  CreateKnightRequest,
+} from '@/application/usecases/create-knight';
+import { MockProxy, mock } from 'jest-mock-extended';
+
+import { faker } from '@faker-js/faker';
+import { KnightInMemoryRepository } from '@test/mocks/applications/protocols/repositories/knight.in-memory-repository';
+
+describe('CreateKnight UseCase', () => {
+  let sut: CreateKnight;
+  let knightRepository: KnightInMemoryRepository;
+  let logger: MockProxy<Logger>;
+
+  beforeEach(() => {
+    knightRepository = new KnightInMemoryRepository();
+    logger = mock();
+
+    sut = new CreateKnight(knightRepository, logger);
+  });
+
+  function makeCreateKnightParams(
+    modifications?: Partial<CreateKnightRequest>,
+  ): CreateKnightRequest {
+    return {
+      name: faker.person.fullName(),
+      nickname: faker.person.firstName(),
+      birthday: faker.date.past({
+        years: 18,
+      }),
+      attributes: {
+        strength: faker.number.int(),
+        dexterity: faker.number.int(),
+        constitution: faker.number.int(),
+        intelligence: faker.number.int(),
+        wisdom: faker.number.int(),
+        charisma: faker.number.int(),
+      },
+      keyAttribute: 'strength',
+      weapons: [],
+      ...modifications,
+    };
+  }
+
+  it('should create a valid knight', async () => {
+    const knight = await sut.execute(makeCreateKnightParams());
+
+    expect(knightRepository.knights.length).toBe(1);
+
+    expect(knight.id).toEqual(knightRepository.knights[0].id);
+    expect(knight.name).toEqual(knightRepository.knights[0].name);
+  });
+});
