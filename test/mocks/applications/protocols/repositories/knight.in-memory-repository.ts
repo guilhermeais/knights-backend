@@ -6,6 +6,7 @@ export class KnightInMemoryRepository implements KnightRepository {
     initialKnights.forEach((knight) => this.knights.set(knight.id, knight));
   }
 
+  deletedKnights: Map<string, Knight> = new Map();
   knights: Map<string, Knight> = new Map();
 
   async create(knight: Knight): Promise<Knight> {
@@ -19,6 +20,12 @@ export class KnightInMemoryRepository implements KnightRepository {
 
   async update(knight: Knight): Promise<void> {
     this.knights.set(knight.id, knight);
+  }
+
+  async softDelete(id: string): Promise<void> {
+    const knight = await this.get(id);
+    this.knights.delete(id);
+    this.deletedKnights.set(id, knight);
   }
 
   get count() {

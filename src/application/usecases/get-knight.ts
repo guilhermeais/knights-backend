@@ -1,28 +1,11 @@
-import {
-  KnightAttributes,
-  KnightAttributesKeys,
-  KnightType,
-  KnightWeapon,
-} from '@/domain/entities/knight';
 import { NotFoundError } from '@/domain/errors/not-found.error';
 import { Injectable } from '@nestjs/common';
-import { KnightDAO } from '../protocols/dao/knight.dao';
+import { KnightDAO, KnightDTO } from '../protocols/dao/knight.dao';
 import { Logger } from '../protocols/gateways/logger.interface';
 import { UseCase } from '../protocols/usecase.interface';
 
 export type GetKnightRequest = string;
-export type GetKnightResponse = {
-  id: string;
-  name: string;
-  nickname: string;
-  birthday: Date;
-  attributes: KnightAttributes;
-  keyAttribute: KnightAttributesKeys;
-  weapons?: KnightWeapon[];
-  type: KnightType;
-  attack: number;
-  experience: number;
-};
+export type GetKnightResponse = KnightDTO;
 
 @Injectable()
 export class GetKnight
