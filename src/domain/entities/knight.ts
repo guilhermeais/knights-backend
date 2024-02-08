@@ -1,4 +1,5 @@
 import { differenceInYears } from 'date-fns';
+import { EquippingMoreThanOnceWeaponError } from '../errors/equipping-more-than-once-weapon.error';
 import { RangeModifier } from '../value-object/range';
 import { UUID } from '../value-object/uuid';
 
@@ -14,7 +15,19 @@ export class Knight {
   }
 
   static create(props: KnightProps): Knight {
+    this.#validate(props);
+
     return new Knight(props);
+  }
+
+  static #validate(props: KnightProps) {
+    const equippedWeapons = props.weapons?.filter(
+      (weapon) => weapon.equipped,
+    ).length;
+
+    if (equippedWeapons > 1) {
+      throw new EquippingMoreThanOnceWeaponError();
+    }
   }
 
   get id() {

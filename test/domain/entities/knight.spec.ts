@@ -1,8 +1,20 @@
 import { Knight } from '@/domain/entities/knight';
+import { EquippingMoreThanOnceWeaponError } from '@/domain/errors/equipping-more-than-once-weapon.error';
 import { makeKnight } from '@test/mocks/domain/entities/knight.mock';
 import { parse } from 'date-fns';
 
 describe('Knight Entity', () => {
+  it('should not be possible to equip two weapons', () => {
+    expect(() =>
+      makeKnight({
+        weapons: [
+          { name: 'Sword', equipped: true, attr: 'strength', mod: 1 },
+          { name: 'Axe', equipped: true, attr: 'strength', mod: 0 },
+        ],
+      }),
+    ).toThrow(new EquippingMoreThanOnceWeaponError());
+  });
+
   describe('getAge()', () => {
     it.each([
       {
