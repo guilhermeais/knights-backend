@@ -4,7 +4,6 @@
 - <input type="checkbox" disabled /> Deve ser possivel apagar um **Knight**
 - <input type="checkbox" disabled /> **Knight** apagados entram no **salão de heróis**.
 - <input type="checkbox" disabled /> Deve ser possivel obter todos os **Knights**
-- <input type="checkbox" disabled /> Um **Knight** deve se tornar um **heroi** após ter um ataque superior a **30**
 - <input type="checkbox" disabled /> Deve ser possivel obter todos **Knights** que se tornaram **herois**
 - <input type="checkbox" disabled /> Deve calcular o poder de ataque de um **Knight** a partir da sua arma e de seus atributos 
     - <input type="checkbox" disabled /> `Ataque = 10 + mod(keyAttribute) + equippedWeapon.mod`

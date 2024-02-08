@@ -7,6 +7,7 @@ import { MockProxy, mock } from 'jest-mock-extended';
 
 import { faker } from '@faker-js/faker';
 import { KnightInMemoryRepository } from '@test/mocks/applications/protocols/repositories/knight.in-memory-repository';
+import { KnightType } from '@/domain/entities/knight';
 
 describe('CreateKnight UseCase', () => {
   let sut: CreateKnight;
@@ -39,6 +40,7 @@ describe('CreateKnight UseCase', () => {
       },
       keyAttribute: 'strength',
       weapons: [],
+      type: KnightType.HERO,
       ...modifications,
     };
   }

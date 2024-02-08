@@ -1,6 +1,7 @@
 import {
   Knight,
   KnightAttributes,
+  KnightType,
   KnightWeapon,
 } from '@/domain/entities/knight';
 import { Injectable } from '@nestjs/common';
@@ -15,6 +16,7 @@ export type CreateKnightRequest = {
   attributes: KnightAttributes;
   weapons?: KnightWeapon[];
   keyAttribute: keyof KnightAttributes;
+  type: KnightType;
 };
 
 export type CreateKnightResponse = Knight;

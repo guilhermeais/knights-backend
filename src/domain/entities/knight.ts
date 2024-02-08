@@ -127,8 +127,9 @@ export type KnightProps = {
   nickname: string;
   birthday: Date;
   attributes: KnightAttributes;
-  keyAttribute: keyof KnightAttributes;
+  keyAttribute: KnightAttributesKeys;
   weapons?: KnightWeapon[];
+  type: KnightType;
 };
 
 export type KnightAttributes = {
@@ -140,9 +141,16 @@ export type KnightAttributes = {
   charisma: number;
 };
 
+export type KnightAttributesKeys = keyof KnightAttributes;
+
 export type KnightWeapon = {
   name: string;
   mod: number;
-  attr: keyof KnightAttributes;
+  attr: KnightAttributesKeys;
   equipped: boolean;
 };
+
+export enum KnightType {
+  HERO = 'HERO',
+  VILLAIN = 'VILLAIN',
+}

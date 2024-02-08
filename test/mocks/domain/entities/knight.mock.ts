@@ -1,4 +1,9 @@
-import { Knight, KnightProps, KnightWeapon } from '@/domain/entities/knight';
+import {
+  Knight,
+  KnightProps,
+  KnightType,
+  KnightWeapon,
+} from '@/domain/entities/knight';
 import { faker } from '@faker-js/faker';
 
 export function makeKnight(modifications?: Partial<KnightProps>): Knight {
@@ -24,6 +29,7 @@ export function makeKnightProps(
     },
     keyAttribute: 'strength',
     weapons: [],
+    type: KnightType.HERO,
     ...modifications,
   };
 }

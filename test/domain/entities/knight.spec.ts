@@ -1,4 +1,3 @@
-import { Knight } from '@/domain/entities/knight';
 import { EquippingMoreThanOnceWeaponError } from '@/domain/errors/equipping-more-than-once-weapon.error';
 import { makeKnight } from '@test/mocks/domain/entities/knight.mock';
 import { parse } from 'date-fns';
@@ -34,20 +33,8 @@ describe('Knight Entity', () => {
     }[])(
       'should create a knight with the age of $expectedAge if his birthdate is $birthday and the actual date is $actualDate',
       ({ actualDate, birthday, expectedAge }) => {
-        const knight = Knight.create({
-          name: 'Sir Knight',
-          nickname: 'Sir',
+        const knight = makeKnight({
           birthday,
-          attributes: {
-            strength: 10,
-            dexterity: 10,
-            constitution: 10,
-            intelligence: 10,
-            wisdom: 10,
-            charisma: 10,
-          },
-          keyAttribute: 'strength',
-          weapons: [],
         });
 
         const age = knight.getAge(actualDate);
