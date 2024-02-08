@@ -15,15 +15,25 @@ export class Knight {
   }
 
   static create(props: KnightProps): Knight {
-    this.#validate(props);
+    const knight = new Knight(props);
 
-    return new Knight(props);
+    knight.validate();
+
+    return knight;
   }
 
-  static #validate(props: KnightProps) {
-    const equippedWeapons = props.weapons?.filter(
-      (weapon) => weapon.equipped,
-    ).length;
+  validate() {
+    this.validateWeapons();
+  }
+
+  setWeapons(weapons: KnightWeapon[]) {
+    this.validateWeapons(weapons);
+
+    this.#props.weapons = weapons;
+  }
+
+  private validateWeapons(weapons = this.#props.weapons) {
+    const equippedWeapons = weapons?.filter((weapon) => weapon.equipped).length;
 
     if (equippedWeapons > 1) {
       throw new EquippingMoreThanOnceWeaponError();
@@ -42,26 +52,8 @@ export class Knight {
     return this.#props.nickname;
   }
 
-  get birthday() {
-    return this.#props.birthday;
-  }
-
-  get attributes() {
-    return this.#props.attributes;
-  }
-
-  get keyAttribute() {
-    return this.#props.keyAttribute;
-  }
-
-  get keyAttributeValue() {
-    return this.attributes[this.keyAttribute];
-  }
-
-  getAge(date: Date = new Date()): number {
-    const age = differenceInYears(date, this.birthday);
-
-    return age;
+  set nickname(nickname: string) {
+    this.#props.nickname = nickname;
   }
 
   get experience() {
@@ -71,6 +63,16 @@ export class Knight {
     if (age < MIN_AGE) return 0;
 
     return Math.floor((age - 7) * Math.pow(22, 1.45));
+  }
+
+  getAge(date: Date = new Date()): number {
+    const age = differenceInYears(date, this.birthday);
+
+    return age;
+  }
+
+  get birthday() {
+    return this.#props.birthday;
   }
 
   get attack() {
@@ -94,8 +96,24 @@ export class Knight {
     );
   }
 
+  get keyAttributeValue() {
+    return this.attributes[this.keyAttribute];
+  }
+
+  get attributes() {
+    return this.#props.attributes;
+  }
+
+  get keyAttribute() {
+    return this.#props.keyAttribute;
+  }
+
   get equippedWeapon() {
     return this.#props.weapons?.find((weapon) => weapon.equipped);
+  }
+
+  get weapons() {
+    return structuredClone(this.#props.weapons);
   }
 
   toProps(): KnightProps {

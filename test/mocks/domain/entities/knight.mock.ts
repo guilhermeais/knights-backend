@@ -1,4 +1,4 @@
-import { Knight, KnightProps } from '@/domain/entities/knight';
+import { Knight, KnightProps, KnightWeapon } from '@/domain/entities/knight';
 import { faker } from '@faker-js/faker';
 
 export function makeKnight(modifications?: Partial<KnightProps>): Knight {
@@ -24,6 +24,18 @@ export function makeKnightProps(
     },
     keyAttribute: 'strength',
     weapons: [],
+    ...modifications,
+  };
+}
+
+export function makeWeapon(
+  modifications?: Partial<KnightWeapon>,
+): KnightWeapon {
+  return {
+    name: faker.commerce.productName(),
+    mod: faker.number.int(),
+    attr: 'strength',
+    equipped: false,
     ...modifications,
   };
 }

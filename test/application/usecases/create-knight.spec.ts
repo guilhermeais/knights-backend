@@ -46,9 +46,11 @@ describe('CreateKnight UseCase', () => {
   it('should create a valid knight', async () => {
     const knight = await sut.execute(makeCreateKnightParams());
 
-    expect(knightRepository.knights.length).toBe(1);
+    expect(knightRepository.count).toBe(1);
 
-    expect(knight.id).toEqual(knightRepository.knights[0].id);
-    expect(knight.name).toEqual(knightRepository.knights[0].name);
+    const createdKnight = await knightRepository.get(knight.id);
+
+    expect(knight.id).toEqual(createdKnight.id);
+    expect(knight.name).toEqual(createdKnight.name);
   });
 });
