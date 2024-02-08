@@ -116,6 +116,10 @@ export class Knight {
     return structuredClone(this.#props.weapons);
   }
 
+  get type() {
+    return this.#props.type;
+  }
+
   toProps(): KnightProps {
     return structuredClone(this.#props);
   }

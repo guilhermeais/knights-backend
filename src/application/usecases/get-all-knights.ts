@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { KnightDAO, KnightDAOModel } from '../protocols/dao/knight.dao';
+import { KnightDAO, SimpleKnightDTO } from '../protocols/dao/knight.dao';
 import { Logger } from '../protocols/gateways/logger.interface';
 import { UseCase } from '../protocols/usecase.interface';
 import { KnightType } from '@/domain/entities/knight';
@@ -8,7 +8,7 @@ export type GetAllKnightsRequest = {
   type?: KnightType;
 };
 
-export type GetAllKnightsResponse = KnightDAOModel[];
+export type GetAllKnightsResponse = SimpleKnightDTO[];
 
 @Injectable()
 export class GetAllKnights

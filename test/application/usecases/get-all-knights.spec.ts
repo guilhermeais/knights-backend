@@ -5,7 +5,7 @@ import {
 } from '@/application/usecases/get-all-knights';
 import { MockProxy, mock } from 'jest-mock-extended';
 
-import { KnightDAOModel } from '@/application/protocols/dao/knight.dao';
+import { KnightDTO } from '@/application/protocols/dao/knight.dao';
 import { KnightType } from '@/domain/entities/knight';
 import {
   KnightInMemoryDAO,
@@ -17,7 +17,7 @@ describe('GetAllKnights UseCase', () => {
   let knightDAO: KnightInMemoryDAO;
   let logger: MockProxy<Logger>;
 
-  const mockedKnights: KnightDAOModel[] = [
+  const mockedKnights: KnightDTO[] = [
     makeKnightDaoModel({
       type: KnightType.HERO,
     }),

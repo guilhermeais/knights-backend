@@ -1,6 +1,11 @@
-import { KnightAttributesKeys, KnightType } from '@/domain/entities/knight';
+import {
+  KnightAttributes,
+  KnightAttributesKeys,
+  KnightType,
+  KnightWeapon,
+} from '@/domain/entities/knight';
 
-export type KnightDAOModel = {
+export type SimpleKnightDTO = {
   id: string;
   name: string;
   nickname: string;
@@ -12,9 +17,24 @@ export type KnightDAOModel = {
   type: KnightType;
 };
 
+export type KnightDTO = {
+  id: string;
+  name: string;
+  nickname: string;
+  birthday: Date;
+  age: number;
+  attributes: KnightAttributes;
+  keyAttribute: KnightAttributesKeys;
+  weapons?: KnightWeapon[];
+  type: KnightType;
+  attack: number;
+  experience: number;
+};
+
 export type KnightDAOGetAllParams = {
   type: KnightType;
 };
 export abstract class KnightDAO {
-  abstract getAll(params?: KnightDAOGetAllParams): Promise<KnightDAOModel[]>;
+  abstract getAll(params?: KnightDAOGetAllParams): Promise<SimpleKnightDTO[]>;
+  abstract getById(id: string): Promise<KnightDTO>;
 }
