@@ -5,21 +5,27 @@ import { UUID } from '../value-object/uuid';
 
 export class Knight {
   #props: KnightProps;
-  #id: string;
 
-  private constructor(props: KnightProps) {
+  private constructor(
+    private readonly _id: string,
+    props: KnightProps,
+  ) {
     this.#props = structuredClone(props);
-    this.#id = props.id || UUID.generate();
 
     Object.freeze(this);
   }
 
   static create(props: KnightProps): Knight {
-    const knight = new Knight(props);
+    const id = UUID.generate();
+    const knight = new Knight(id, props);
 
     knight.validate();
 
     return knight;
+  }
+
+  static restore(id: string, props: KnightProps): Knight {
+    return new Knight(id, props);
   }
 
   validate() {
@@ -41,7 +47,7 @@ export class Knight {
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   get name() {
@@ -126,7 +132,6 @@ export class Knight {
 }
 
 export type KnightProps = {
-  id?: string;
   name: string;
   nickname: string;
   birthday: Date;
