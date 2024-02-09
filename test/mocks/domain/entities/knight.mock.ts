@@ -1,5 +1,6 @@
 import {
   Knight,
+  KnightAttributesEnum,
   KnightProps,
   KnightType,
   KnightWeapon,
@@ -27,7 +28,7 @@ export function makeKnightProps(
       wisdom: faker.number.int(),
       charisma: faker.number.int(),
     },
-    keyAttribute: 'strength',
+    keyAttribute: KnightAttributesEnum.STRENGTH,
     weapons: [],
     type: KnightType.HERO,
     ...modifications,
@@ -40,7 +41,7 @@ export function makeWeapon(
   return {
     name: faker.commerce.productName(),
     mod: faker.number.int(),
-    attr: 'strength',
+    attr: KnightAttributesEnum.STRENGTH,
     equipped: false,
     ...modifications,
   };

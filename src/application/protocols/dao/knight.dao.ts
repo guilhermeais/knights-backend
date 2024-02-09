@@ -1,6 +1,6 @@
 import {
   KnightAttributes,
-  KnightAttributesKeys,
+  KnightAttributesEnum,
   KnightType,
   KnightWeapon,
 } from '@/domain/entities/knight';
@@ -11,7 +11,7 @@ export type SimpleKnightDTO = {
   nickname: string;
   age: number;
   weaponsQuantity: number;
-  keyAttribute: KnightAttributesKeys;
+  keyAttribute: KnightAttributesEnum;
   attack: number;
   experience: number;
   type: KnightType;
@@ -24,7 +24,7 @@ export type KnightDTO = {
   birthday: Date;
   age: number;
   attributes: KnightAttributes;
-  keyAttribute: KnightAttributesKeys;
+  keyAttribute: KnightAttributesEnum;
   weapons?: KnightWeapon[];
   type: KnightType;
   attack: number;

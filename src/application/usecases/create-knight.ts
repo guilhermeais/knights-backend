@@ -1,6 +1,7 @@
 import {
   Knight,
   KnightAttributes,
+  KnightAttributesEnum,
   KnightType,
   KnightWeapon,
 } from '@/domain/entities/knight';
@@ -15,7 +16,7 @@ export type CreateKnightRequest = {
   birthday: Date;
   attributes: KnightAttributes;
   weapons?: KnightWeapon[];
-  keyAttribute: keyof KnightAttributes;
+  keyAttribute: KnightAttributesEnum;
   type: KnightType;
 };
 

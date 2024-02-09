@@ -1,3 +1,4 @@
+import { KnightAttributesEnum } from '@/domain/entities/knight';
 import { EquippingMoreThanOnceWeaponError } from '@/domain/errors/equipping-more-than-once-weapon.error';
 import { makeKnight } from '@test/mocks/domain/entities/knight.mock';
 import { parse } from 'date-fns';
@@ -7,8 +8,18 @@ describe('Knight Entity', () => {
     expect(() =>
       makeKnight({
         weapons: [
-          { name: 'Sword', equipped: true, attr: 'strength', mod: 1 },
-          { name: 'Axe', equipped: true, attr: 'strength', mod: 0 },
+          {
+            name: 'Sword',
+            equipped: true,
+            attr: KnightAttributesEnum.STRENGTH,
+            mod: 1,
+          },
+          {
+            name: 'Axe',
+            equipped: true,
+            attr: KnightAttributesEnum.STRENGTH,
+            mod: 0,
+          },
         ],
       }),
     ).toThrow(new EquippingMoreThanOnceWeaponError());
@@ -82,8 +93,18 @@ describe('Knight Entity', () => {
     it('should return the equipped weapon', () => {
       const knight = makeKnight({
         weapons: [
-          { name: 'Sword', equipped: false, attr: 'strength', mod: 1 },
-          { name: 'Axe', equipped: true, attr: 'strength', mod: 0 },
+          {
+            name: 'Sword',
+            equipped: false,
+            attr: KnightAttributesEnum.STRENGTH,
+            mod: 1,
+          },
+          {
+            name: 'Axe',
+            equipped: true,
+            attr: KnightAttributesEnum.STRENGTH,
+            mod: 0,
+          },
         ],
       });
 
@@ -166,11 +187,12 @@ describe('Knight Entity', () => {
             {
               name: 'Sword',
               equipped: true,
-              attr: 'strength',
+              attr: KnightAttributesEnum.STRENGTH,
+
               mod: equippedWeaponMod,
             },
           ],
-          keyAttribute: 'strength',
+          keyAttribute: KnightAttributesEnum.STRENGTH,
         });
 
         expect(knight.attack).toBe(expectedAttack);

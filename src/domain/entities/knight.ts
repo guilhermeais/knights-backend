@@ -136,26 +136,29 @@ export type KnightProps = {
   nickname: string;
   birthday: Date;
   attributes: KnightAttributes;
-  keyAttribute: KnightAttributesKeys;
+  keyAttribute: KnightAttributesEnum;
   weapons?: KnightWeapon[];
   type: KnightType;
 };
 
-export type KnightAttributes = {
-  strength: number;
-  dexterity: number;
-  constitution: number;
-  intelligence: number;
-  wisdom: number;
-  charisma: number;
-};
+export type KnightAttributes = Record<
+  Lowercase<keyof typeof KnightAttributesEnum>,
+  number
+>;
 
-export type KnightAttributesKeys = keyof KnightAttributes;
+export enum KnightAttributesEnum {
+  STRENGTH = 'strength',
+  DEXTERITY = 'dexterity',
+  CONSTITUTION = 'constitution',
+  INTELLIGENCE = 'intelligence',
+  WISDOM = 'wisdom',
+  CHARISMA = 'charisma',
+}
 
 export type KnightWeapon = {
   name: string;
   mod: number;
-  attr: KnightAttributesKeys;
+  attr: KnightAttributesEnum;
   equipped: boolean;
 };
 

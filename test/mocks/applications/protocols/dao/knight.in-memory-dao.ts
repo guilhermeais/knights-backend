@@ -4,7 +4,7 @@ import {
   KnightDTO,
   SimpleKnightDTO,
 } from '@/application/protocols/dao/knight.dao';
-import { KnightType } from '@/domain/entities/knight';
+import { KnightAttributesEnum, KnightType } from '@/domain/entities/knight';
 import { faker } from '@faker-js/faker';
 
 export function makeSimpleKnightDaoModel(
@@ -18,7 +18,7 @@ export function makeSimpleKnightDaoModel(
     }),
     attack: faker.number.int(),
     experience: faker.number.int(),
-    keyAttribute: 'strength',
+    keyAttribute: KnightAttributesEnum.STRENGTH,
     name: faker.person.fullName(),
     nickname: faker.person.firstName(),
     type: KnightType.HERO,
@@ -38,7 +38,7 @@ export function makeKnightDaoModel(
     }),
     attack: faker.number.int(),
     experience: faker.number.int(),
-    keyAttribute: 'strength',
+    keyAttribute: KnightAttributesEnum.STRENGTH,
     name: faker.person.fullName(),
     nickname: faker.person.firstName(),
     type: KnightType.HERO,
