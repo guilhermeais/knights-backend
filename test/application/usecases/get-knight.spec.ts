@@ -1,5 +1,5 @@
 import { Logger } from '@/application/protocols/gateways/logger.interface';
-import { MockProxy, mock } from 'jest-mock-extended';
+import { MockProxy, mock } from 'vitest-mock-extended';
 
 import { KnightDTO } from '@/application/protocols/dao/knight.dao';
 import { GetKnight, GetKnightRequest } from '@/application/usecases/get-knight';

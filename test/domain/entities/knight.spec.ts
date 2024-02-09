@@ -58,7 +58,7 @@ describe('Knight Entity', () => {
   describe('.experience', () => {
     it("should return 0 if the knight's age is less than 7", () => {
       const actualDate = parse('2021/01/01', 'yyyy/MM/dd', new Date());
-      jest.useFakeTimers({
+      vi.useFakeTimers({
         now: actualDate,
       });
 
@@ -69,12 +69,12 @@ describe('Knight Entity', () => {
       expect(knight.getAge()).toBe(6);
       expect(knight.experience).toBe(0);
 
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     it("should return the knight's experience based on his age", () => {
       const actualDate = parse('2021/01/01', 'yyyy/MM/dd', new Date());
-      jest.useFakeTimers({
+      vi.useFakeTimers({
         now: actualDate,
       });
 
@@ -85,7 +85,7 @@ describe('Knight Entity', () => {
       expect(knight.getAge()).toBe(29);
       expect(knight.experience).toBe(1945);
 
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
   });
 

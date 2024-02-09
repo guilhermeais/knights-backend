@@ -3,7 +3,7 @@ import {
   GetAllKnights,
   GetAllKnightsRequest,
 } from '@/application/usecases/get-all-knights';
-import { MockProxy, mock } from 'jest-mock-extended';
+import { MockProxy, mock } from 'vitest-mock-extended';
 
 import { KnightDTO } from '@/application/protocols/dao/knight.dao';
 import { KnightType } from '@/domain/entities/knight';

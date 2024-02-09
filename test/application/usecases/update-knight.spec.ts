@@ -3,7 +3,7 @@ import {
   UpdateKnight,
   UpdateKnightRequest,
 } from '@/application/usecases/update-knight';
-import { MockProxy, mock } from 'jest-mock-extended';
+import { MockProxy, mock } from 'vitest-mock-extended';
 
 import { faker } from '@faker-js/faker';
 import { KnightInMemoryRepository } from '@test/mocks/applications/protocols/repositories/knight.in-memory-repository';
