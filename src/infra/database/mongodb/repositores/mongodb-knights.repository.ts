@@ -2,8 +2,8 @@ import { KnightRepository } from '@/application/protocols/repositories/knight.re
 import { Knight } from '@/domain/entities/knight';
 import { Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { MongoDbKnightMapper } from './mappers/mongodb-knight.mapper';
-import { KnightModel } from './schemas/knight.schema';
+import { MongoDbKnightMapper } from '../mappers/mongodb-knight.mapper';
+import { KnightModel } from '../schemas/knight.schema';
 
 export class MongoDBKnightsRepository implements KnightRepository {
   constructor(
