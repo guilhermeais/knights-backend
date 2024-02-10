@@ -1,5 +1,8 @@
+import { DatabaseModule } from '@/infra/database/database.module';
 import { envSchema } from '@/infra/env/env';
 import { EnvModule } from '@/infra/env/env.module';
+import { GatewaysModule } from '@/infra/gateways/gateways.module';
+import { HttpModule } from '@/infra/http/http.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
@@ -10,6 +13,9 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
     EnvModule,
+    DatabaseModule,
+    GatewaysModule,
+    HttpModule,
   ],
   controllers: [],
   providers: [],

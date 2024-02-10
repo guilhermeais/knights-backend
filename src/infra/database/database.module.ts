@@ -21,6 +21,6 @@ import { MongoDBKnightsDAO } from './mongodb/dao/mongodb-knights.dao';
       useClass: MongoDBKnightsDAO,
     },
   ],
-  exports: [MongooseConnectionFactory, KnightRepository],
+  exports: [MongooseConnectionFactory, KnightRepository, KnightDAO],
 })
 export class DatabaseModule {}
