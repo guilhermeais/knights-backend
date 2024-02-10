@@ -27,7 +27,7 @@ describe('MongoDBKnightsRepository', () => {
     sut = moduleRef.get(KnightRepository);
 
     await app.init();
-  }, 100000);
+  });
 
   describe('get()', () => {
     it('should get an existing knight', async () => {
