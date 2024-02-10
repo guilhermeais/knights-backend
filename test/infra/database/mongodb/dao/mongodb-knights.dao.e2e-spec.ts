@@ -145,4 +145,22 @@ describe('MongoDBKnightsDAO', () => {
       expect(response).toEqual(expectedKnights);
     });
   });
+
+  describe('getById()', () => {
+    it('should return the knight with a detailed data structure', async () => {
+      const aKnight = await knightFactory.createMongoKnight({
+        weapons: [makeWeapon()],
+      });
+
+      const response = await sut.getById(aKnight.id);
+
+      expect(response.id).toEqual(aKnight.id);
+      expect(response.age).toEqual(aKnight.getAge());
+      expect(response.attack).toEqual(aKnight.attack);
+      expect(response.experience).toEqual(aKnight.experience);
+      expect(response.nickname).toEqual(aKnight.nickname);
+      expect(response.weapons).toEqual(aKnight.weapons);
+      expect(response.type).toEqual(aKnight.type);
+    });
+  });
 });

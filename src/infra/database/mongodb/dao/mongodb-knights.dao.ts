@@ -43,6 +43,11 @@ export class MongoDBKnightsDAO implements KnightDAO {
   }
 
   async getById(id: string): Promise<KnightDTO> {
-    return null;
+    const result = await this.knightModel.findById(id, {
+      _id: 0,
+      'weapons._id': 0,
+    });
+
+    return result.toJSON();
   }
 }
