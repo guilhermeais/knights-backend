@@ -13,7 +13,7 @@ export type UpdateKnightRequest = {
 
 export type UpdateKnightResponse = void;
 
-Injectable();
+@Injectable()
 export class UpdateKnight
   implements UseCase<UpdateKnightRequest, Promise<UpdateKnightResponse>>
 {

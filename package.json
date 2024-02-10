@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "guilhermais",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -16,9 +16,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "npm run test -- --coverage",
-    "test:debug": "npm run test -- --inspect-brk --inspect --logHeapUsage --threads=false",
+    "test:debug": "npm run test -- --inspect --logHeapUsage",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
+    "test:e2e:watch": "vitest  --config ./vitest.config.e2e.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

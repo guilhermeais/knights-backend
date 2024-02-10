@@ -1,5 +1,4 @@
 import { KnightRepository } from '@/application/protocols/repositories/knight.repository';
-import { DatabaseModule } from '@/infra/database/database.module';
 import { CreateKnightDto } from '@/infra/http/dto/create-knight.dto';
 import { DefaultExceptionFilter } from '@/infra/http/filters/default-exception-filter.filter';
 import { AppModule } from '@/main/app.module';
@@ -18,7 +17,7 @@ describe('Create a Knight (E2E)', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule, DatabaseModule],
+      imports: [AppModule],
     }).compile();
 
     app = moduleRef.createNestApplication();

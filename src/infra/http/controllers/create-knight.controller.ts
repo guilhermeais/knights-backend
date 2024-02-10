@@ -15,20 +15,20 @@ export class CreateKnightController {
   async handle(@Body() body: CreateKnightDto) {
     try {
       this.logger.info(
-        CreateKnight.name,
+        CreateKnightController.name,
         `Creating a new knight with name: ${body.name}`,
       );
       const knight = await this.createKnight.execute(body);
 
       this.logger.info(
-        CreateKnight.name,
+        CreateKnightController.name,
         `Knight ${knight.name} created with id: ${knight.id}`,
       );
 
       return KnightPresenter.toHTTP(knight);
     } catch (error) {
       this.logger.error(
-        CreateKnight.name,
+        CreateKnightController.name,
         `Error on creating kngith ${body.name}: ${error.message}`,
       );
       throw error;
