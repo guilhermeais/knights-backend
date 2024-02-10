@@ -1,6 +1,9 @@
 import { KnightAttributesEnum, KnightType } from '@/domain/entities/knight';
 import { faker } from '@faker-js/faker';
-import { CreateKnightDto } from '@/infra/http/dto/create-knight.dto';
+import {
+  CreateKnightDto,
+  KnightWeaponDto,
+} from '@/infra/http/dto/create-knight.dto';
 
 export function makeCreateKnightDto(
   modifications?: Partial<CreateKnightDto>,
@@ -22,6 +25,18 @@ export function makeCreateKnightDto(
     keyAttribute: KnightAttributesEnum.STRENGTH,
     weapons: [],
     type: KnightType.HERO,
+    ...modifications,
+  };
+}
+
+export function makeKnightWeaponDto(
+  modifications?: Partial<KnightWeaponDto>,
+): KnightWeaponDto {
+  return {
+    name: faker.commerce.productName(),
+    attr: KnightAttributesEnum.STRENGTH,
+    equipped: false,
+    mod: faker.number.int(),
     ...modifications,
   };
 }

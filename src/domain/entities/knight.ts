@@ -11,6 +11,15 @@ export class Knight {
     props: KnightProps,
   ) {
     this.#props = structuredClone(props);
+    this.#props.attributes = structuredClone({
+      charisma: 0,
+      constitution: 0,
+      dexterity: 0,
+      intelligence: 0,
+      strength: 0,
+      wisdom: 0,
+      ...props.attributes,
+    });
 
     Object.freeze(this);
   }
@@ -141,9 +150,8 @@ export type KnightProps = {
   type: KnightType;
 };
 
-export type KnightAttributes = Record<
-  Lowercase<keyof typeof KnightAttributesEnum>,
-  number
+export type KnightAttributes = Partial<
+  Record<Lowercase<keyof typeof KnightAttributesEnum>, number>
 >;
 
 export enum KnightAttributesEnum {
@@ -163,6 +171,6 @@ export type KnightWeapon = {
 };
 
 export enum KnightType {
-  HERO = 'HERO',
-  VILLAIN = 'VILLAIN',
+  HERO = 'hero',
+  VILLAIN = 'villain',
 }

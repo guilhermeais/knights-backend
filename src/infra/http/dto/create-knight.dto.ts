@@ -6,72 +6,124 @@ import {
 } from '@/domain/entities/knight';
 import { Transform, Type } from 'class-transformer';
 import {
-  IsArray,
   IsDate,
   IsEnum,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 
 export class KnightAttributesDto implements KnightAttributes {
   @IsOptional()
-  @Transform(({ value }) => Number(value ?? 0))
-  @IsNumber(null, {
-    message: 'Atributo de sabedoria (wisdom) inválido.',
-  })
-  wisdom: number;
+  @Transform((data) => data?.value && Number(data.value ?? 0))
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message: 'wisdom: Atributo de sabedoria (wisdom) inválido.',
+    },
+  )
+  wisdom?: number;
 
-  @IsNumber(null, {
-    message: 'Atributo de força (strength) inválido.',
-  })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message: 'strength: Atributo de força (strength) inválido.',
+    },
+  )
   @IsOptional()
-  @Transform(({ value }) => Number(value ?? 0))
-  strength: number;
+  @Transform((data) => data?.value && Number(data.value ?? 0))
+  strength?: number;
 
-  @IsNumber(null, {
-    message: 'Atributo de destreza (dexterity) inválido.',
-  })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message: 'dexterity: Atributo de destreza (dexterity) inválido.',
+    },
+  )
   @IsOptional()
-  @Transform(({ value }) => Number(value ?? 0))
-  dexterity: number;
+  @Transform((data) => data?.value && Number(data.value ?? 0))
+  dexterity?: number;
 
-  @IsNumber(null, {
-    message: 'Atributo de inteligência (intelligence) inválido.',
-  })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message:
+        'intelligence: Atributo de inteligência (intelligence) inválido.',
+    },
+  )
   @IsOptional()
-  @Transform(({ value }) => Number(value ?? 0))
-  intelligence: number;
+  @Transform((data) => data?.value && Number(data.value ?? 0))
+  intelligence?: number;
 
-  @IsNumber(null, {
-    message: 'Atributo de constituição (constitution) inválido.',
-  })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message:
+        'constitution: Atributo de constituição (constitution) inválido.',
+    },
+  )
   @IsOptional()
-  @Transform(({ value }) => Number(value ?? 0))
-  constitution: number;
+  @Transform((data) => data?.value && Number(data.value ?? 0))
+  constitution?: number;
 
-  @IsNumber(null, {
-    message: 'Atributo de carisma (charisma) inválido.',
-  })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message: 'charisma: Atributo de carisma (charisma) inválido.',
+    },
+  )
   @IsOptional()
-  @Transform(({ value }) => Number(value ?? 0))
-  charisma: number;
+  @Transform((data) => data?.value && Number(data.value ?? 0))
+  charisma?: number;
 }
 
 export class KnightWeaponDto implements KnightWeapon {
   @IsString({
-    message: 'Nome da arma inválido.',
+    message: 'name: Nome da arma inválido.',
   })
   name: string;
 
-  @IsNumber(null, {
-    message: 'Modificador de dano da arma inválido.',
-  })
+  @IsNumber(
+    {
+      maxDecimalPlaces: 0,
+      allowInfinity: false,
+      allowNaN: false,
+    },
+    {
+      message: 'mod: Modificador de dano da arma inválido.',
+    },
+  )
   @Transform(({ value }) => value && Number(value))
   mod: number;
 
   @IsEnum(KnightAttributesEnum, {
-    message: `Atributo da arma inválido. Os valores válidos são: ${Object.values(
+    message: `attr: Atributo da arma inválido. Os valores válidos são: ${Object.values(
       KnightAttributesEnum,
     ).join(', ')}`,
   })
@@ -96,16 +148,23 @@ export class CreateKnightDto {
   @IsDate({
     message: 'Data de nascimento inválida.',
   })
-  @Transform(({ value }) => new Date(value))
+  @Transform(({ value }) => value && new Date(value))
   birthday: Date;
 
+  @ValidateNested({
+    message: 'Há algum propriedade inválida nos atributos do guerreiro.',
+  })
   @Type(() => KnightAttributesDto)
+  @IsObject({
+    message: 'Atributos inválidos.',
+  })
   @IsOptional()
   attributes: KnightAttributesDto;
 
   @Type(() => KnightWeaponDto)
-  @IsArray({
+  @ValidateNested({
     each: true,
+    message: 'Armas do guerreiro inválida(s).',
   })
   weapons?: KnightWeaponDto[];
 
@@ -116,6 +175,10 @@ export class CreateKnightDto {
   })
   keyAttribute: KnightAttributesEnum;
 
-  @IsEnum(KnightType)
+  @IsEnum(KnightType, {
+    message: `Tipo inválido. Os valores válidos são: ${Object.values(
+      KnightType,
+    ).join(', ')}`,
+  })
   type: KnightType;
 }
