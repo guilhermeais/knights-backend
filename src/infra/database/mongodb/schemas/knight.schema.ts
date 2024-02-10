@@ -5,80 +5,59 @@ import {
   KnightType,
   KnightWeapon,
 } from '@/domain/entities/knight';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema } from 'mongoose';
 
-export class KnightAttributesModel implements KnightAttributes {
-  @Prop()
-  strength: number;
-
-  @Prop()
-  dexterity: number;
-
-  @Prop()
-  constitution: number;
-
-  @Prop()
-  intelligence: number;
-
-  @Prop()
-  wisdom: number;
-
-  @Prop()
-  charisma: number;
-}
-
-export class KnightWeaponModel implements KnightWeapon {
-  @Prop()
-  name: string;
-
-  @Prop()
-  mod: number;
-
-  @Prop()
-  attr: KnightAttributesEnum;
-
-  @Prop()
-  equipped: boolean;
-}
-
-@Schema()
 export class KnightModel implements KnightDTO {
   static get modelName() {
     return 'knight' as const;
   }
 
-  @Prop()
   id: string;
-
-  @Prop()
   name: string;
-
-  @Prop()
   nickname: string;
-
-  @Prop()
   birthday: Date;
-
-  @Prop()
   age: number;
-
-  @Prop()
-  attributes: KnightAttributesModel;
-
-  @Prop()
+  attributes: KnightAttributes;
   keyAttribute: KnightAttributesEnum;
-
-  @Prop([KnightWeaponModel])
   weapons?: KnightWeapon[];
-
-  @Prop()
   type: KnightType;
-
-  @Prop()
   attack: number;
-
-  @Prop()
   experience: number;
 }
 
-export const KnightSchema = SchemaFactory.createForClass(KnightModel);
+export const KnightSchema = new Schema<KnightModel, KnightModel>({
+  id: String,
+  name: String,
+  nickname: String,
+  birthday: Date,
+  age: Number,
+  attributes: {
+    strength: Number,
+    dexterity: Number,
+    constitution: Number,
+    intelligence: Number,
+    wisdom: Number,
+    charisma: Number,
+  },
+  keyAttribute: {
+    type: String,
+    enum: Object.values(KnightAttributesEnum),
+  },
+  weapons: [
+    {
+      name: String,
+      mod: Number,
+      attr: {
+        type: String,
+        enum: Object.values(KnightAttributesEnum),
+      },
+      equipped: Boolean,
+    },
+  ],
+  type: {
+    enum: Object.values(KnightType),
+    type: String,
+  },
+  attack: Number,
+  experience: Number,
+});
