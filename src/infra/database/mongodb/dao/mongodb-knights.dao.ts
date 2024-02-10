@@ -16,10 +16,16 @@ export class MongoDBKnightsDAO implements KnightDAO {
 
   async getAll(params?: KnightDAOGetAllParams): Promise<SimpleKnightDTO[]> {
     const result = await this.knightModel.aggregate([
-      { $match: { deletedAt: null } },
+      {
+        $match: {
+          deletedAt: null,
+          ...(params?.type ? { type: params.type } : {}),
+        },
+      },
       { $addFields: { weaponsQuantity: { $size: '$weapons' } } },
       {
         $project: {
+          _id: 0,
           id: 1,
           name: 1,
           nickname: 1,
