@@ -5,13 +5,16 @@ import {
   KnightType,
   KnightWeapon,
 } from '@/domain/entities/knight';
-import { Schema } from 'mongoose';
+import { Provider } from '@nestjs/common';
+import { Mongoose, Schema } from 'mongoose';
+import { MONGOOSE_CONNECTION_NAME } from '../utils/mongoose.connection.factory';
 
 export class KnightModel implements KnightDTO {
   static get modelName() {
-    return 'knight' as const;
+    return 'knights' as const;
   }
 
+  _id: string;
   id: string;
   name: string;
   nickname: string;
@@ -23,9 +26,19 @@ export class KnightModel implements KnightDTO {
   type: KnightType;
   attack: number;
   experience: number;
+  deletedAt?: Date;
 }
 
+export const KnightModelProvider: Provider = {
+  provide: KnightModel.name,
+  inject: [MONGOOSE_CONNECTION_NAME],
+  useFactory(mongoose: Mongoose) {
+    return mongoose.model<KnightModel>(KnightModel.modelName, KnightSchema);
+  },
+};
+
 export const KnightSchema = new Schema<KnightModel, KnightModel>({
+  _id: Schema.Types.UUID,
   id: String,
   name: String,
   nickname: String,
@@ -60,4 +73,8 @@ export const KnightSchema = new Schema<KnightModel, KnightModel>({
   },
   attack: Number,
   experience: Number,
+  deletedAt: {
+    type: Date,
+    default: null,
+  },
 });
