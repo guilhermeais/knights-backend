@@ -16,4 +16,4 @@
         ```
 
 ## Requisito não-funcional
-- 🟩 Deve haver paginação na listagem. `(Performance)`
+- ✅ Deve haver paginação na listagem. `(Performance)`
