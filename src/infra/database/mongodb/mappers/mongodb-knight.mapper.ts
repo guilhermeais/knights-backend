@@ -17,6 +17,8 @@ export class MongoDbKnightMapper {
       nickname: knight.nickname,
       type: knight.type,
       weapons: knight.weapons,
+      createdAt: knight.createdAt,
+      updatedAt: knight.updatedAt,
     };
   }
 
