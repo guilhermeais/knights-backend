@@ -75,7 +75,7 @@ describe('Create a Knight (E2E)', () => {
       expect(knightDb.attributes).toEqual(createdKnight.attributes);
     });
 
-    it('should not equipe more than once weapon', async () => {
+    it('should not equip more than once weapon', async () => {
       const eighteenYearsAgo = subYears(new Date(), 18);
 
       const createKnightData = makeCreateKnightDto({
@@ -98,7 +98,9 @@ describe('Create a Knight (E2E)', () => {
 
       expect(response.body).toEqual({
         statusCode: 400,
-        message: ['Um Knight não pode equipar a mesma arma mais de uma vez.'],
+        message: [
+          'Um Knight não pode equipar mais de uma arma ao mesmo tempo.',
+        ],
         error: 'EquippingMoreThanOnceWeaponError',
       });
     });
