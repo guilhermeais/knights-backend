@@ -10,7 +10,7 @@ async function startMongoDB() {
 
   mongoContainer = await new MongoDBContainer().start();
 
-  process.env.MONGO_URL = mongoContainer.getConnectionString();
+  process.env.MONGO_URL = `${mongoContainer.getConnectionString()}?directConnection=true`;
 
   console.log(`🚀 MongoDBContainer started at ${process.env.MONGO_URL}`);
 }

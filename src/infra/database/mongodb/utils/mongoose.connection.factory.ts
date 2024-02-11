@@ -17,8 +17,9 @@ export const MongooseConnectionFactory: FactoryProvider = {
     const connection = await mongoose.connect(uri, {
       dbName,
       appName,
-      directConnection: true,
     });
+
+    console.log('🚀 MongoDB connected');
 
     return connection;
   },
