@@ -22,7 +22,7 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept',
   });
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   console.log(`Application is running on: 0.0.0.0:${port} 🚀`);
 }
