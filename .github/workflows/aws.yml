@@ -9,7 +9,7 @@ env:
   ECR_REPOSITORY: knights-api           # set this to your Amazon ECR repository name
   ECS_SERVICE: knights-backend             # set this to your Amazon ECS service name
   ECS_CLUSTER: knights-backend                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: knights-backend:1 # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: .aws/knights-backend-revision2.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: knights-backend           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
