@@ -23,10 +23,16 @@ export class KnightFactory {
     );
   }
 
-  async createMongoKnight(modifications?: Partial<KnightProps>) {
+  async createMongoKnight(
+    modifications?: Partial<KnightProps>,
+    createdAt?: Date,
+  ) {
     const knight = makeKnight(modifications);
 
-    await this.#knightsModel.create(MongoDbKnightMapper.toMongoDb(knight));
+    await this.#knightsModel.create({
+      ...MongoDbKnightMapper.toMongoDb(knight),
+      createdAt: createdAt ?? new Date(),
+    });
 
     return knight;
   }

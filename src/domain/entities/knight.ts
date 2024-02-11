@@ -9,6 +9,7 @@ export class Knight {
   private constructor(
     private readonly _id: string,
     props: KnightProps,
+    private readonly _createdAt: Date,
   ) {
     this.#props = structuredClone(props);
     this.#props.attributes = structuredClone({
@@ -26,15 +27,15 @@ export class Knight {
 
   static create(props: KnightProps): Knight {
     const id = UUID.generate();
-    const knight = new Knight(id, props);
+    const knight = new Knight(id, props, new Date());
 
     knight.validate();
 
     return knight;
   }
 
-  static restore(id: string, props: KnightProps): Knight {
-    return new Knight(id, props);
+  static restore(id: string, props: KnightProps, createdAt: Date): Knight {
+    return new Knight(id, props, createdAt);
   }
 
   validate() {
@@ -133,6 +134,10 @@ export class Knight {
 
   get type() {
     return this.#props.type;
+  }
+
+  get createdAt() {
+    return this._createdAt;
   }
 
   toProps(): KnightProps {

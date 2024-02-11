@@ -22,19 +22,23 @@ export class MongoDbKnightMapper {
 
   static toDomain(knightDb: Document<unknown, object, KnightModel>): Knight {
     const knightDbJSON = knightDb.toJSON();
-    return Knight.restore(knightDbJSON.id, {
-      attributes: knightDbJSON.attributes,
-      birthday: knightDbJSON.birthday,
-      keyAttribute: knightDbJSON.keyAttribute,
-      name: knightDbJSON.name,
-      nickname: knightDbJSON.nickname,
-      type: knightDbJSON.type,
-      weapons: knightDbJSON.weapons.map((weapon) => ({
-        attr: weapon.attr,
-        equipped: weapon.equipped,
-        mod: weapon.mod,
-        name: weapon.name,
-      })),
-    });
+    return Knight.restore(
+      knightDbJSON.id,
+      {
+        attributes: knightDbJSON.attributes,
+        birthday: knightDbJSON.birthday,
+        keyAttribute: knightDbJSON.keyAttribute,
+        name: knightDbJSON.name,
+        nickname: knightDbJSON.nickname,
+        type: knightDbJSON.type,
+        weapons: knightDbJSON.weapons.map((weapon) => ({
+          attr: weapon.attr,
+          equipped: weapon.equipped,
+          mod: weapon.mod,
+          name: weapon.name,
+        })),
+      },
+      knightDbJSON.createdAt,
+    );
   }
 }

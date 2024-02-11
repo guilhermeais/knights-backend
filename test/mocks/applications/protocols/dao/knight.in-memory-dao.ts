@@ -4,6 +4,7 @@ import {
   KnightDTO,
   SimpleKnightDTO,
 } from '@/application/protocols/dao/knight.dao';
+import { PaginatedResponse } from '@/application/protocols/pagination.interface';
 import { KnightAttributesEnum, KnightType } from '@/domain/entities/knight';
 import { faker } from '@faker-js/faker';
 
@@ -67,8 +68,10 @@ export class KnightInMemoryDAO implements KnightDAO {
     return this.knights.get(id);
   }
 
-  async getAll(params?: KnightDAOGetAllParams): Promise<SimpleKnightDTO[]> {
-    return Array.from(this.knights.values())
+  async getAll(
+    params?: KnightDAOGetAllParams,
+  ): Promise<PaginatedResponse<SimpleKnightDTO>> {
+    const allKnights = Array.from(this.knights.values())
       .filter((knight) => !params?.type || knight.type === params.type)
       .map((knight) => ({
         id: knight.id,
@@ -81,5 +84,29 @@ export class KnightInMemoryDAO implements KnightDAO {
         type: knight.type,
         weaponsQuantity: knight.weapons.length,
       }));
+
+    return this.paginateArray(
+      allKnights,
+      params?.page || 1,
+      params?.limit || 10,
+    );
+  }
+
+  private paginateArray<T>(
+    array: T[],
+    page: number,
+    limit: number,
+  ): PaginatedResponse<T> {
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const totalPages = Math.ceil(array.length / limit);
+    return {
+      data: array.slice(start, end),
+      total: array.length,
+      page,
+      limit,
+      totalPages,
+      nextPage: page < totalPages ? page + 1 : null,
+    };
   }
 }

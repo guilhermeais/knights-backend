@@ -16,6 +16,7 @@ describe('MongoDBKnightsDAO', () => {
   let sut: KnightDAO;
 
   beforeAll(async () => {
+    vi.useFakeTimers();
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
       providers: [KnightFactory],
@@ -27,6 +28,11 @@ describe('MongoDBKnightsDAO', () => {
     sut = moduleRef.get(KnightDAO);
 
     await app.init();
+  });
+
+  afterAll(async () => {
+    vi.useRealTimers();
+    await app.close();
   });
 
   describe('getAll()', () => {
@@ -52,11 +58,12 @@ describe('MongoDBKnightsDAO', () => {
           nickname: knight.nickname,
           type: knight.type,
           weaponsQuantity: knight.weapons.length,
+          createdAt: knight.createdAt,
         }),
       );
 
-      expect(response.length).toEqual(expectedKnights.length);
-      expect(response).toEqual(expectedKnights);
+      expect(response.data.length).toEqual(expectedKnights.length);
+      expect(response.data).toEqual(expectedKnights);
     });
 
     it('should return empty array if knights does not exists', async () => {
@@ -64,8 +71,8 @@ describe('MongoDBKnightsDAO', () => {
 
       const expectedKnights = [];
 
-      expect(response.length).toEqual(expectedKnights.length);
-      expect(response).toEqual(expectedKnights);
+      expect(response.data.length).toEqual(expectedKnights.length);
+      expect(response.data).toEqual(expectedKnights);
     });
 
     it('should get all knights heroes with a simple data structure', async () => {
@@ -101,10 +108,11 @@ describe('MongoDBKnightsDAO', () => {
         nickname: knight.nickname,
         type: knight.type,
         weaponsQuantity: knight.weapons.length,
+        createdAt: knight.createdAt,
       }));
 
-      expect(response.length).toEqual(expectedKnights.length);
-      expect(response).toEqual(expectedKnights);
+      expect(response.data.length).toEqual(expectedKnights.length);
+      expect(response.data).toEqual(expectedKnights);
     });
 
     it('should get all knights villains with a simple data structure', async () => {
@@ -138,11 +146,46 @@ describe('MongoDBKnightsDAO', () => {
           nickname: knight.nickname,
           type: knight.type,
           weaponsQuantity: knight.weapons.length,
+          createdAt: knight.createdAt,
         }),
       );
 
-      expect(response.length).toEqual(expectedKnights.length);
-      expect(response).toEqual(expectedKnights);
+      expect(response.data.length).toEqual(expectedKnights.length);
+      expect(response.data).toEqual(expectedKnights);
+    });
+
+    it('should correctly paginate the knights', async () => {
+      await Promise.all(
+        Array.from({ length: 10 }).map(async (_, index) => {
+          await knightFactory.createMongoKnight(
+            {
+              name: `Knight ${index + 1}`,
+              weapons: [makeWeapon()],
+            },
+            new Date(2021, 1, 1, index + 1),
+          );
+        }),
+      );
+
+      const firstPage = await sut.getAll({ limit: 5, page: 1 });
+
+      expect(firstPage.data.length).toEqual(5);
+      expect(firstPage.total).toEqual(10);
+      expect(firstPage.totalPages).toEqual(2);
+      expect(firstPage.nextPage).toEqual(2);
+
+      expect(firstPage.data.at(0).name).toEqual('Knight 1');
+      expect(firstPage.data.at(-1).name).toEqual('Knight 5');
+
+      const secondPage = await sut.getAll({ limit: 5, page: 2 });
+
+      expect(secondPage.data.length).toEqual(5);
+      expect(secondPage.total).toEqual(10);
+      expect(secondPage.totalPages).toEqual(2);
+      expect(secondPage.nextPage).toBeNull();
+
+      expect(secondPage.data.at(0).name).toEqual('Knight 6');
+      expect(secondPage.data.at(-1).name).toEqual('Knight 10');
     });
   });
 

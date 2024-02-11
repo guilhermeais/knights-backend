@@ -16,6 +16,10 @@ describe('MongoDBKnightsRepository', () => {
   let sut: KnightRepository;
 
   beforeAll(async () => {
+    vi.useFakeTimers({
+      now: new Date(),
+    });
+
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
       providers: [KnightFactory],
@@ -27,6 +31,11 @@ describe('MongoDBKnightsRepository', () => {
     sut = moduleRef.get(KnightRepository);
 
     await app.init();
+  });
+
+  afterAll(async () => {
+    vi.useRealTimers();
+    await app.close();
   });
 
   describe('get()', () => {

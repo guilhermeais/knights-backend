@@ -38,31 +38,60 @@ describe('GetAllKnights UseCase', () => {
   ): GetAllKnightsRequest {
     return {
       type: null,
+      limit: 10,
+      page: 1,
       ...modifications,
     };
   }
 
   it('should get all knights', async () => {
-    const knights = await sut.execute(makeGetAllKnightsParams());
+    const result = await sut.execute(makeGetAllKnightsParams());
 
-    expect(knights).toHaveLength(2);
+    expect(result.data).toHaveLength(2);
+  });
+
+  it('should get all knights paginated', async () => {
+    const result = await sut.execute(
+      makeGetAllKnightsParams({
+        limit: 1,
+      }),
+    );
+
+    expect(result.data).toHaveLength(1);
+    expect(result.total).toBe(2);
+    expect(result.totalPages).toBe(2);
+    expect(result.nextPage).toBe(2);
+    expect(result.page).toBe(1);
+
+    const secondPageResult = await sut.execute(
+      makeGetAllKnightsParams({
+        limit: 1,
+        page: 2,
+      }),
+    );
+
+    expect(secondPageResult.data).toHaveLength(1);
+    expect(secondPageResult.total).toBe(2);
+    expect(secondPageResult.totalPages).toBe(2);
+    expect(secondPageResult.nextPage).toBe(null);
+    expect(secondPageResult.page).toBe(2);
   });
 
   it('should get all heroes', async () => {
-    const knights = await sut.execute(
+    const result = await sut.execute(
       makeGetAllKnightsParams({ type: KnightType.HERO }),
     );
 
-    expect(knights).toHaveLength(1);
-    expect(knights[0].type).toEqual(KnightType.HERO);
+    expect(result.data).toHaveLength(1);
+    expect(result.data[0].type).toEqual(KnightType.HERO);
   });
 
   it('should get all villains', async () => {
-    const knights = await sut.execute(
+    const result = await sut.execute(
       makeGetAllKnightsParams({ type: KnightType.VILLAIN }),
     );
 
-    expect(knights).toHaveLength(1);
-    expect(knights[0].type).toEqual(KnightType.VILLAIN);
+    expect(result.data).toHaveLength(1);
+    expect(result.data[0].type).toEqual(KnightType.VILLAIN);
   });
 });

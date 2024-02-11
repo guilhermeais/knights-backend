@@ -4,6 +4,7 @@ import {
   KnightType,
   KnightWeapon,
 } from '@/domain/entities/knight';
+import { PaginatedRequest, PaginatedResponse } from '../pagination.interface';
 
 export type SimpleKnightDTO = {
   id: string;
@@ -15,6 +16,7 @@ export type SimpleKnightDTO = {
   attack: number;
   experience: number;
   type: KnightType;
+  createdAt: Date;
 };
 
 export type KnightDTO = {
@@ -31,10 +33,12 @@ export type KnightDTO = {
   experience: number;
 };
 
-export type KnightDAOGetAllParams = {
-  type: KnightType;
-};
+export type KnightDAOGetAllParams = PaginatedRequest<{
+  type?: KnightType;
+}>;
 export abstract class KnightDAO {
-  abstract getAll(params?: KnightDAOGetAllParams): Promise<SimpleKnightDTO[]>;
+  abstract getAll(
+    params?: KnightDAOGetAllParams,
+  ): Promise<PaginatedResponse<SimpleKnightDTO>>;
   abstract getById(id: string): Promise<KnightDTO>;
 }

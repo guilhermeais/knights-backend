@@ -27,6 +27,7 @@ export class KnightModel implements KnightDTO {
   attack: number;
   experience: number;
   deletedAt?: Date;
+  createdAt?: Date;
 }
 
 export const KnightModelProvider: Provider = {
@@ -37,44 +38,49 @@ export const KnightModelProvider: Provider = {
   },
 };
 
-export const KnightSchema = new Schema<KnightModel, KnightModel>({
-  _id: Schema.Types.UUID,
-  id: String,
-  name: String,
-  nickname: String,
-  birthday: Date,
-  age: Number,
-  attributes: {
-    strength: Number,
-    dexterity: Number,
-    constitution: Number,
-    intelligence: Number,
-    wisdom: Number,
-    charisma: Number,
-  },
-  keyAttribute: {
-    type: String,
-    enum: Object.values(KnightAttributesEnum),
-  },
-  weapons: [
-    {
-      name: String,
-      mod: Number,
-      attr: {
-        type: String,
-        enum: Object.values(KnightAttributesEnum),
-      },
-      equipped: Boolean,
+export const KnightSchema = new Schema<KnightModel, KnightModel>(
+  {
+    _id: Schema.Types.UUID,
+    id: String,
+    name: String,
+    nickname: String,
+    birthday: Date,
+    age: Number,
+    attributes: {
+      strength: Number,
+      dexterity: Number,
+      constitution: Number,
+      intelligence: Number,
+      wisdom: Number,
+      charisma: Number,
     },
-  ],
-  type: {
-    enum: Object.values(KnightType),
-    type: String,
+    keyAttribute: {
+      type: String,
+      enum: Object.values(KnightAttributesEnum),
+    },
+    weapons: [
+      {
+        name: String,
+        mod: Number,
+        attr: {
+          type: String,
+          enum: Object.values(KnightAttributesEnum),
+        },
+        equipped: Boolean,
+      },
+    ],
+    type: {
+      enum: Object.values(KnightType),
+      type: String,
+    },
+    attack: Number,
+    experience: Number,
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
   },
-  attack: Number,
-  experience: Number,
-  deletedAt: {
-    type: Date,
-    default: null,
+  {
+    timestamps: true,
   },
-});
+);

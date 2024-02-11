@@ -7,6 +7,7 @@ import {
 import { Inject } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { KnightModel } from '../schemas/knight.schema';
+import { PaginatedResponse } from '@/application/protocols/pagination.interface';
 
 export class MongoDBKnightsDAO implements KnightDAO {
   constructor(
@@ -14,8 +15,16 @@ export class MongoDBKnightsDAO implements KnightDAO {
     private readonly knightModel: Model<KnightModel>,
   ) {}
 
-  async getAll(params?: KnightDAOGetAllParams): Promise<SimpleKnightDTO[]> {
-    const result = await this.knightModel.aggregate([
+  async getAll(
+    params?: KnightDAOGetAllParams,
+  ): Promise<PaginatedResponse<SimpleKnightDTO>> {
+    const page = params?.page ?? 1;
+    const limit = params?.limit ?? 10;
+
+    const [result] = await this.knightModel.aggregate<{
+      metadata: { totalCount: number }[];
+      data: SimpleKnightDTO[];
+    }>([
       {
         $match: {
           deletedAt: null,
@@ -35,11 +44,32 @@ export class MongoDBKnightsDAO implements KnightDAO {
           attack: 1,
           experience: 1,
           type: 1,
+          createdAt: 1,
+        },
+      },
+      { $sort: { createdAt: 1 } },
+      {
+        $facet: {
+          metadata: [{ $count: 'totalCount' }],
+          data: [{ $skip: (page - 1) * limit }, { $limit: limit }],
         },
       },
     ]);
 
-    return result;
+    const [metadata] = result?.metadata;
+
+    const total = metadata?.totalCount ?? 0;
+    const totalPages = Math.ceil(total / limit);
+    const nextPage = page < totalPages ? page + 1 : null;
+
+    return {
+      data: result.data,
+      limit,
+      page,
+      total,
+      nextPage,
+      totalPages,
+    };
   }
 
   async getById(id: string): Promise<KnightDTO> {
