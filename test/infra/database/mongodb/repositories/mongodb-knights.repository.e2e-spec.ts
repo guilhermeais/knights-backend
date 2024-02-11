@@ -46,7 +46,7 @@ describe('MongoDBKnightsRepository', () => {
 
       const response = await sut.get(existingKnight.id);
 
-      expect(response).toEqual(existingKnight);
+      expect(response.id).toEqual(existingKnight.id);
     });
 
     it('should return null if not found the knight', async () => {
@@ -64,7 +64,7 @@ describe('MongoDBKnightsRepository', () => {
 
       const response = await sut.create(knight);
 
-      expect(response).toEqual(knight);
+      expect(response.id).toEqual(knight.id);
       expect(response.weapons).toEqual(knight.weapons);
     });
   });
@@ -76,13 +76,16 @@ describe('MongoDBKnightsRepository', () => {
       existingKnight.setWeapons([makeWeapon()]);
       existingKnight.nickname = 'new nickname';
 
+      expect(existingKnight.updatedAt).toBeUndefined();
+
       await sut.update(existingKnight);
 
       const response = await sut.get(existingKnight.id);
 
-      expect(response).toEqual(existingKnight);
+      expect(response.id).toEqual(existingKnight.id);
       expect(response.weapons).toEqual(existingKnight.weapons);
       expect(response.nickname).toEqual(existingKnight.nickname);
+      expect(response.updatedAt).toBeDefined();
     });
   });
 

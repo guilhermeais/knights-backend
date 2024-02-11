@@ -28,6 +28,7 @@ export class KnightModel implements KnightDTO {
   experience: number;
   deletedAt?: Date;
   createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const KnightModelProvider: Provider = {

@@ -39,6 +39,7 @@ export class MongoDbKnightMapper {
         })),
       },
       knightDbJSON.createdAt,
+      knightDbJSON.updatedAt,
     );
   }
 }
