@@ -59,6 +59,7 @@ describe('MongoDBKnightsDAO', () => {
           type: knight.type,
           weaponsQuantity: knight.weapons.length,
           createdAt: knight.createdAt,
+          updatedAt: expect.any(Date),
         }),
       );
 
@@ -109,6 +110,7 @@ describe('MongoDBKnightsDAO', () => {
         type: knight.type,
         weaponsQuantity: knight.weapons.length,
         createdAt: knight.createdAt,
+        updatedAt: expect.any(Date),
       }));
 
       expect(response.data.length).toEqual(expectedKnights.length);
@@ -147,6 +149,7 @@ describe('MongoDBKnightsDAO', () => {
           type: knight.type,
           weaponsQuantity: knight.weapons.length,
           createdAt: knight.createdAt,
+          updatedAt: expect.any(Date),
         }),
       );
 

@@ -24,6 +24,7 @@ export function makeSimpleKnightDaoModel(
     nickname: faker.person.firstName(),
     type: KnightType.HERO,
     weaponsQuantity: faker.number.int(),
+    createdAt: faker.date.recent(),
     ...modifications,
   };
 }
@@ -53,6 +54,7 @@ export function makeKnightDaoModel(
     },
     birthday: faker.date.recent(),
     weapons: [],
+    createdAt: faker.date.recent(),
     ...modifications,
   };
 }
@@ -83,6 +85,8 @@ export class KnightInMemoryDAO implements KnightDAO {
         nickname: knight.nickname,
         type: knight.type,
         weaponsQuantity: knight.weapons.length,
+        createdAt: knight.createdAt,
+        updatedAt: knight.updatedAt,
       }));
 
     return this.paginateArray(

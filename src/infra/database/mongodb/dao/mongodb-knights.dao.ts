@@ -45,6 +45,7 @@ export class MongoDBKnightsDAO implements KnightDAO {
           experience: 1,
           type: 1,
           createdAt: 1,
+          updatedAt: 1,
         },
       },
       { $sort: { createdAt: 1 } },

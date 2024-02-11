@@ -17,6 +17,7 @@ export type SimpleKnightDTO = {
   experience: number;
   type: KnightType;
   createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type KnightDTO = {
@@ -31,6 +32,8 @@ export type KnightDTO = {
   type: KnightType;
   attack: number;
   experience: number;
+  createdAt: Date;
+  updatedAt?: Date;
 };
 
 export type KnightDAOGetAllParams = PaginatedRequest<{
