@@ -5,6 +5,7 @@ import {
 import { KnightType } from '@/domain/entities/knight';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { AppModule } from '@/main/app.module';
+import { faker } from '@faker-js/faker';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { makeWeapon } from '@test/mocks/domain/entities/knight.mock';
@@ -207,6 +208,14 @@ describe('MongoDBKnightsDAO', () => {
       expect(response.nickname).toEqual(aKnight.nickname);
       expect(response.weapons).toEqual(aKnight.weapons);
       expect(response.type).toEqual(aKnight.type);
+    });
+
+    it('should return null if does not exists', async () => {
+      const id = faker.string.uuid();
+
+      const response = await sut.getById(id);
+
+      expect(response).toBeNull();
     });
   });
 });

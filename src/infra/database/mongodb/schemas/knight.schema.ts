@@ -27,7 +27,7 @@ export class KnightModel implements KnightDTO {
   attack: number;
   experience: number;
   deletedAt?: Date;
-  createdAt?: Date;
+  createdAt: Date;
   updatedAt?: Date;
 }
 

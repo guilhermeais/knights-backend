@@ -1,6 +1,7 @@
 import { DatabaseModule } from '@/infra/database/database.module';
 import { DefaultExceptionFilter } from '@/infra/http/filters/default-exception-filter.filter';
 import { AppModule } from '@/main/app.module';
+import { faker } from '@faker-js/faker';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { KnightFactory } from '@test/mocks/infra/database/mongodb/knight.mock.factory';
@@ -57,6 +58,19 @@ describe('Get Knight (E2E)', () => {
         name: aKnight.name,
         nickname: aKnight.nickname,
         type: aKnight.type,
+      });
+    });
+
+    it('should return 404 if specific knight does not exists', async () => {
+      const id = faker.string.uuid();
+
+      const response = await request(app.getHttpServer()).get(`/knights/${id}`);
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({
+        error: 'NotFoundError',
+        message: [`Knight com id: ${id} não encontrado.`],
+        statusCode: 404,
       });
     });
   });

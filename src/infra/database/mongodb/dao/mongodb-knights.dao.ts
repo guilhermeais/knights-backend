@@ -79,6 +79,6 @@ export class MongoDBKnightsDAO implements KnightDAO {
       'weapons._id': 0,
     });
 
-    return result.toJSON();
+    return result?.toJSON() ?? null;
   }
 }
