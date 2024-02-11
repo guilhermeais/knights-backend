@@ -58,4 +58,6 @@ COPY --chown=node:node --from=build /app/node_modules node_modules
 
 USER node
 
+EXPOSE 3000
+
 CMD ["node", "dist/src/main/main.js"]
