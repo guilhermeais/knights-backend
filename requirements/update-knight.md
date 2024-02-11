@@ -18,4 +18,3 @@
     }
     ```
 - ✅ Um Knight pode equipar somente uma arma.
-.
